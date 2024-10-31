@@ -16,14 +16,26 @@ export async function GET() {
 
     const data = await response.json();
 
+    // Define the structure of a record to avoid using 'any'
+    interface AirtableRecord {
+        id: string;
+        fields: {
+            Name: string;
+            Price: number;
+            Inventory?: number;
+            Image?: { url: string }[];
+            Description?: string;
+        };
+    }
+
     if (data.records) {
-        const tickets = data.records.map((record: any) => ({
+        const tickets = data.records.map((record: AirtableRecord) => ({
             id: record.id,
             name: record.fields.Name,
             price: record.fields.Price,
             inventory: record.fields.Inventory || 0, // Ensure inventory is a number
-            imageUrl: record.fields.Image[0]?.url || '',
-            description: record.fields.Description,
+            imageUrl: record.fields.Image ? record.fields.Image[0]?.url : '',
+            description: record.fields.Description || '',
         }));
         return NextResponse.json({ tickets });
     } else {
