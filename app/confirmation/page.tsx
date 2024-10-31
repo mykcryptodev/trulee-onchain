@@ -13,7 +13,7 @@ export default function ConfirmationPage() {
     const userName = searchParams.get('userName') || '';
     const email = searchParams.get('email') || '';
     const ticketCount = parseInt(searchParams.get('ticketCount') || '1', 10);
-    const [chargeId, setChargeId] = useState<string | null>(null);
+   // const [chargeId, setChargeId] = useState<string | null>(null);
 
     const handleCreateCharge = async () => {
         try {
@@ -35,8 +35,6 @@ export default function ConfirmationPage() {
 
             const data = await response.json();
             if (data.chargeId) {
-                setChargeId(data.chargeId);
-
                 // Update inventory in Airtable after successful charge creation
                 const updateInventoryResponse = await fetch('/api/updateInventory', {
                     method: 'POST',
