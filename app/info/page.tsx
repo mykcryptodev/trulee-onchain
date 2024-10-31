@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation';
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Disable SSR for this page
 const InfoPage = dynamic(() => Promise.resolve(InfoPageContent), { ssr: false });
 
 function InfoPageContent() {

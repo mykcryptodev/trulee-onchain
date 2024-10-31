@@ -25,17 +25,15 @@ export default function TicketPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const router = useRouter();
 
-  // Fetch ticket data from Airtable
   useEffect(() => {
     async function fetchTickets() {
-      const response = await fetch('/api/fetchTickets');
+      const response = await fetch('/api/fetchTickets', { cache: 'no-store' });
       const data = await response.json();
       setTickets(data.tickets);
     }
     fetchTickets();
   }, []);
 
-  // Navigate to information collection page with selected ticket details
   const handleSelectTicket = (ticket: Ticket) => {
     router.push(`/info?ticketId=${ticket.id}&name=${ticket.name}&price=${ticket.price}&imageUrl=${ticket.imageUrl}&description=${ticket.description}&inventory=${ticket.inventory}`);
   };

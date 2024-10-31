@@ -11,6 +11,7 @@ export async function GET() {
     const response = await fetch(url, {
         headers: {
             Authorization: `Bearer ${apiKey}`,
+            'Cache-Control': 'no-store', // Ensures real-time data fetching
         },
     });
 
