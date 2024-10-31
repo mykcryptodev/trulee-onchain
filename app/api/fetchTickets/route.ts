@@ -16,14 +16,13 @@ export async function GET() {
 
     const data = await response.json();
 
-    // Define the structure of a record to avoid using 'any'
     interface AirtableRecord {
         id: string;
         fields: {
             Name: string;
             Price: number;
             Inventory?: number;
-            Image?: { url: string }[];
+            Image?: { url: string }[];  // Access the first URL from the array
             Description?: string;
         };
     }
@@ -33,8 +32,8 @@ export async function GET() {
             id: record.id,
             name: record.fields.Name,
             price: record.fields.Price,
-            inventory: record.fields.Inventory || 0, // Ensure inventory is a number
-            imageUrl: record.fields.Image ? record.fields.Image[0]?.url : '',
+            inventory: record.fields.Inventory || 0,
+            imageUrl: record.fields.Image ? record.fields.Image[0].url : '', // Use first attachment URL
             description: record.fields.Description || '',
         }));
         return NextResponse.json({ tickets });
