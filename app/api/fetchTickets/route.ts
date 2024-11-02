@@ -6,7 +6,7 @@ export async function GET() {
     const baseId = process.env.AIRTABLE_BASE_ID;
     const tableId = process.env.AIRTABLE_TABLE_ID;
 
-    const url = `https://api.airtable.com/v0/${baseId}/${tableId}?q=bust+cached`;
+    const url = `https://api.airtable.com/v0/${baseId}/${tableId}`;
 
     const response = await fetch(url, {
         headers: {

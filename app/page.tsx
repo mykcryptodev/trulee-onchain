@@ -28,7 +28,14 @@ export default function TicketPage() {
 
   useEffect(() => {
     async function fetchTickets() {
-      const response = await fetch('/api/fetchTickets', { cache: 'no-store' });
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/fetchTickets?t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        },
+      });
       const data = await response.json();
       setTickets(data.tickets);
     }
