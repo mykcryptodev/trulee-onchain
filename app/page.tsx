@@ -11,6 +11,7 @@ import {
   WalletDropdownDisconnect,
 } from '@coinbase/onchainkit/wallet';
 import { Avatar, Name, Identity, Address, EthBalance } from '@coinbase/onchainkit/identity';
+import Image from 'next/image';
 
 interface Ticket {
   id: string;
@@ -66,7 +67,13 @@ export default function TicketPage() {
           <h1 className="text-3xl font-bold mb-4">Available Tickets</h1>
           {tickets.map((ticket) => (
             <div key={ticket.id} className="mb-4 p-4 border rounded-lg">
-              <img src={ticket.imageUrl} alt={ticket.name} className="w-full h-48 object-cover mb-4 rounded" />
+              <Image 
+                src={ticket.imageUrl} 
+                alt={ticket.name} 
+                width={100}
+                height={100}
+                className="w-full h-48 object-contain mb-4 rounded" 
+              />
               <h2 className="text-xl font-semibold">{ticket.name}</h2>
               <p className="mb-2">{ticket.description}</p>
               <p>Price: {ticket.price} USDC</p>
