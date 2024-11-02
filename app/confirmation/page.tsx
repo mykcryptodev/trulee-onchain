@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Checkout, CheckoutButton, CheckoutStatus } from '@coinbase/onchainkit/checkout';
+import type { LifecycleStatus } from '@coinbase/onchainkit/checkout';
 
 const ConfirmationPage = dynamic(() => Promise.resolve(ConfirmationPageContent), { ssr: false });
 
@@ -15,6 +16,28 @@ function ConfirmationPageContent() {
     const userName = searchParams.get('userName') || '';
     const email = searchParams.get('email') || '';
     const ticketCount = parseInt(searchParams.get('ticketCount') || '1', 10);
+
+    const handleStatus = async (status: LifecycleStatus) => {
+        const { statusName } = status;
+        
+        if (statusName === 'success') {
+            // Decrement inventory only after successful payment
+            try {
+                await fetch('/api/updateInventory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ticketId, 
+                        quantity: ticketCount, 
+                        action: 'decrease' 
+                    }),
+                });
+            } catch (error) {
+                console.error('Failed to decrement inventory:', error);
+                // You might want to add error handling here
+            }
+        }
+    };
 
     const handleCreateCharge = async () => {
         try {
@@ -36,16 +59,6 @@ function ConfirmationPageContent() {
 
             const data = await response.json();
             if (data.chargeId) {
-                const updateInventoryResponse = await fetch('/api/updateInventory', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ticketId, quantity: ticketCount }),
-                });
-
-                if (!updateInventoryResponse.ok) {
-                    console.error('Failed to update inventory in Airtable');
-                }
-
                 return data.chargeId;
             }
             throw new Error('Charge creation failed');
@@ -67,7 +80,10 @@ function ConfirmationPageContent() {
                         <p>Tickets: {ticketCount}</p>
                         <h2 className="text-lg font-semibold mb-4">Total: {totalAmount} USDC</h2>
 
-                        <Checkout chargeHandler={handleCreateCharge}>
+                        <Checkout 
+                            chargeHandler={handleCreateCharge}
+                            onStatus={handleStatus}
+                        >
                             <div className="flex flex-col items-center">
                                 <CheckoutButton coinbaseBranded text="Pay with Crypto" className="w-50 mb-2" />
                                 <CheckoutStatus />
