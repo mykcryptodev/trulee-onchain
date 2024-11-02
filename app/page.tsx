@@ -12,6 +12,7 @@ import {
 } from '@coinbase/onchainkit/wallet';
 import { Avatar, Name, Identity, Address, EthBalance } from '@coinbase/onchainkit/identity';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Ticket {
   id: string;
@@ -71,7 +72,11 @@ export default function TicketPage() {
 
       <main className="flex-grow flex flex-col items-center justify-center text-center">
         <div className="bg-white p-8 rounded-2xl shadow-lg max-w-lg w-full">
-          <h1 className="text-3xl font-bold mb-4">Trulee Handmade Bags</h1>
+          <Image src="/images/logo.png" alt="Trulee Logo" width={100} height={100} className="w-full h-48 object-contain mb-4 rounded" />
+          <h1 className="text-3xl font-bold">Trulee Handmade Bags</h1>
+          <Link href="https://www.instagram.com/truleehandmade/" target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            <p className="text-sm mb-4">View on Instagram</p>
+          </Link>
           {tickets.map((ticket) => (
             <div key={ticket.id} className="mb-4 p-4 border rounded-lg">
               <Image 
