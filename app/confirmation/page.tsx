@@ -15,6 +15,7 @@ function ConfirmationPageContent() {
     const totalAmount = searchParams.get('price') || '0.00';
     const userName = searchParams.get('userName') || '';
     const email = searchParams.get('email') || '';
+    const shippingAddress = searchParams.get('shippingAddress') || '';
     const ticketCount = parseInt(searchParams.get('ticketCount') || '1', 10);
 
     const handleStatus = async (status: LifecycleStatus) => {
@@ -51,6 +52,7 @@ function ConfirmationPageContent() {
                     metadata: {
                         name: userName,
                         email,
+                        shippingAddress,
                         ticketCount,
                         ticketType: ticketName,
                     },
@@ -77,7 +79,8 @@ function ConfirmationPageContent() {
                         <p>Ticket: {ticketName}</p>
                         <p>Name: {userName}</p>
                         <p>Email: {email}</p>
-                        <p>Tickets: {ticketCount}</p>
+                        <p>Shipping Address: {shippingAddress}</p>
+                        <p>Quantity: {ticketCount}</p>
                         <h2 className="text-lg font-semibold mb-4">Total: {totalAmount} USDC</h2>
 
                         <Checkout 

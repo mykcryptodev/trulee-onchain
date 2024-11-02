@@ -71,7 +71,7 @@ export default function TicketPage() {
 
       <main className="flex-grow flex flex-col items-center justify-center text-center">
         <div className="bg-white p-8 rounded-2xl shadow-lg max-w-lg w-full">
-          <h1 className="text-3xl font-bold mb-4">Available Tickets</h1>
+          <h1 className="text-3xl font-bold mb-4">Trulee Handmade Bags</h1>
           {tickets.map((ticket) => (
             <div key={ticket.id} className="mb-4 p-4 border rounded-lg">
               <Image 

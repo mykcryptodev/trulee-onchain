@@ -20,6 +20,7 @@ function InfoPageContent() {
 
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [shippingAddress, setShippingAddress] = useState('');
     const [ticketCount, setTicketCount] = useState(1);
     const router = useRouter();
 
@@ -27,13 +28,14 @@ function InfoPageContent() {
 
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+    const handleShippingAddressChange = (e: ChangeEvent<HTMLInputElement>) => setShippingAddress(e.target.value);
     const handleTicketCountChange = (e: ChangeEvent<HTMLInputElement>) => {
         const count = Math.min(Number(e.target.value), inventory);
         setTicketCount(count);
     };
 
     const handleConfirm = () => {
-        router.push(`/confirmation?ticketId=${ticketId}&name=${ticketName}&price=${totalAmount}&userName=${userName}&email=${email}&ticketCount=${ticketCount}`);
+        router.push(`/confirmation?ticketId=${ticketId}&name=${ticketName}&price=${totalAmount}&userName=${userName}&email=${email}&shippingAddress=${shippingAddress}&ticketCount=${ticketCount}`);
     };
 
     return (
@@ -55,7 +57,10 @@ function InfoPageContent() {
                         <label className="block">Email</label>
                         <input type="email" placeholder="Your Email" value={email} onChange={handleEmailChange} className="p-2 border rounded w-full mb-2" />
 
-                        <label className="block">Tickets (Max: {inventory})</label>
+                        <label className="block">Shipping Address</label>
+                        <input type="text" placeholder="Your Shipping Address" value={shippingAddress} onChange={handleShippingAddressChange} className="p-2 border rounded w-full mb-2" />
+
+                        <label className="block">Quantity (Max: {inventory})</label>
                         <input type="number" min="1" max={inventory} value={ticketCount} onChange={handleTicketCountChange} className="p-2 border rounded w-full mb-2" />
 
                         <h2 className="text-lg font-semibold mt-4">Total: {totalAmount} USDC</h2>
