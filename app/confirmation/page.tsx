@@ -76,6 +76,7 @@ function ConfirmationPageContent() {
                 <main className="flex-grow flex flex-col items-center justify-center text-center">
                     <div className="bg-background p-8 rounded-2xl shadow-lg max-w-lg w-full text-foreground">
                         <h1 className="text-3xl font-bold mb-2">Confirm Your Order</h1>
+                        <p className="text-sm text-gray-500 mb-4">All sales are final. No refunds.</p>
                         <p>Ticket: {ticketName}</p>
                         <p>Name: {userName}</p>
                         <p>Email: {email}</p>
